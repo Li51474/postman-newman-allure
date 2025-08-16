@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "48f72c4f-bc97-43ef-81c0-6f25bdcb1d5b",
+		"name": "CRM9-Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47289404",
+		"_collection_link": "https://cdl18336059116-5193958.postman.co/workspace/%E9%99%88%E8%91%A3%E7%90%86's-Workspace~e4a0ba56-7991-4004-8690-4f6a4d6d2cca/collection/47289404-48f72c4f-bc97-43ef-81c0-6f25bdcb1d5b?action=share&source=collection_link&creator=47289404"
+	},
+	"item": [
+		{
+			"name": "01-管理员登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 1. 把响应体转成 JSON\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"// 2. 提取 token（按实际字段名修改）\r",
+							"const token = jsonData[\"Admin-Token\"];\r",
+							"\r",
+							"// 3. 存成全局变量（也可存环境变量 pm.environment.set）\r",
+							"pm.globals.set(\"token\", token);\r",
+							"\r",
+							"// 4.（可选）控制台打印验证\r",
+							"console.log(\"提取到的 token =\", token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.232.128:8080/login",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"232",
+						"128"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02-新增用户（注册）",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Admin-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "realname",
+							"value": "张三"
+						},
+						{
+							"key": "roleIds",
+							"value": "1"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.232.128:8080/system/user/addUser",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"232",
+						"128"
+					],
+					"port": "8080",
+					"path": [
+						"system",
+						"user",
+						"addUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03-查询信息",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
