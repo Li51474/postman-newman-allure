@@ -55,7 +55,7 @@ pipeline {
         always {
             emailext subject: "[${env.JOB_NAME}] #${env.BUILD_NUMBER} - ${currentBuild.result ?: 'SUCCESS'}",
                        body: "查看 Allure 报告：${env.BUILD_URL}allure",
-                       to: 'your-team@company.com'
+                       to: '2149251474@qq.com'
         }
     }
 }
